@@ -1,0 +1,39 @@
+@page "/alarms"
+
+<h3>Alarm Clocks</h3>
+
+<div>
+    <button class="btn btn-primary" @onclick="AddAlarm">Add Alarm</button>
+</div>
+
+@foreach (var alarm in AlarmsList)
+{
+    <div class="alarm-item">
+        <input type="time" @bind="alarm.Time" />
+        <button class="btn btn-danger" @onclick="() => RemoveAlarm(alarm)">Remove</button>
+    </div>
+}
+
+@if (AlarmsList.Count == 0)
+{
+    <p>No alarms set.</p>
+}
+
+@code {
+    public class Alarm
+    {
+        public DateTime Time { get; set; } = DateTime.Now;
+    }
+
+    List<Alarm> AlarmsList = new();
+
+    void AddAlarm()
+    {
+        AlarmsList.Add(new Alarm());
+    }
+
+    void RemoveAlarm(Alarm alarm)
+    {
+        AlarmsList.Remove(alarm);
+    }
+}
